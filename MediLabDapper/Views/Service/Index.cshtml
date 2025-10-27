@@ -1,0 +1,51 @@
+﻿@using MediLabDapper.Dtos.ServiceDtos
+@model IEnumerable<ResultServiceDto>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/AdminLayout/Index.cshtml";
+}
+
+@{
+    int count = 0;
+}
+
+<div class="card">
+    <div class="card-header">
+        <h4 class="card-title">Hizmetler</h4>
+    </div>
+    <div class="card-content">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-lg">
+                    <thead>
+                        <tr>
+                            <th>İkon</th>
+                            <th>Başlık</th>
+                            <th>Açıklama</th>
+                            <th>İşlemler</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            count++;
+                            <tr>
+                                <td>@item.Icon</td>
+                                <td>@item.Title</td>
+                                <td>@item.Description</td>
+                                <td>
+                                    <a href="/Service/UpdateService/@item.ServiceId" class="btn btn-warning rounded-pill">Güncelle</a>
+                                    <a href="/Service/DeleteService/@item.ServiceId" class="btn btn-danger rounded-pill">Sil</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <a href="/Service/CreateService" class="btn btn-primary">Yeni Hizmet Ekle</a>
+</div>
+
+
+

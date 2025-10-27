@@ -1,0 +1,37 @@
+﻿@model IEnumerable<ResultAboutWithItemDto>
+
+@{
+    // Tek bir about alanını vitrine çıkaralım (ilkini alıyoruz)
+    var about = Model?.FirstOrDefault();
+}
+
+<section id="about" class="about section">
+    <div class="container">
+        <div class="row gy-4 gx-5">
+
+            <div class="col-lg-6 position-relative align-self-start" data-aos="fade-up" data-aos-delay="200"> <img src="~/MediLab-1.0.0/assets/img/about.jpg" class="img-fluid" alt=""> <a href="https://www.youtube.com/watch?v=Y7f98aduVJ8" class="glightbox pulsating-play-btn"></a> </div>
+
+            <div class="col-lg-6 content" data-aos="fade-up" data-aos-delay="100">
+                <h3>Hakkımızda</h3>
+                <p>
+                    @(about?.AboutDescription ?? "Medilab, uzman kadrosu ve ileri teknoloji altyapısıyla güvenli, hızlı ve erişilebilir sağlık hizmeti sunar.")
+                </p>
+
+                <ul>
+                    @foreach (var item in Model)
+                    {
+                        <li>
+                            <i class="@(string.IsNullOrWhiteSpace(item.Icon) ? "fa-solid fa-circle-check" : item.Icon)"></i>
+                            <div>
+                                <h5>@item.Title</h5>
+                                <p>@item.Description</p>
+                            </div>
+                        </li>
+                    }
+
+                </ul>
+            </div>
+
+        </div>
+    </div>
+</section>

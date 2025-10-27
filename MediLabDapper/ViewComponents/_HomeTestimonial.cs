@@ -1,0 +1,14 @@
+﻿using MediLabDapper.Repositories.TestimonialRepositories;
+using Microsoft.AspNetCore.Mvc;
+
+namespace MediLabDapper.ViewComponents
+{
+    public class _HomeTestimonial(ITestimonialRepository _repository) : ViewComponent
+    {
+        public async Task<IViewComponentResult> InvokeAsync()
+        {
+            var value = await _repository.GetAllTestimonialsAsync();
+            return View(value);
+        }
+    }
+}

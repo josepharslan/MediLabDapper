@@ -1,0 +1,46 @@
+﻿@model IEnumerable<ResultDepartmentDto>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/AdminLayout/Index.cshtml";
+}
+@{
+    int count = 0;
+}
+<div class="card">
+    <div class="card-header">
+        <h4 class="card-title">Departmanlar</h4>
+    </div>
+    <div class="card-content">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-lg">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Departman Adı</th>
+                            <th>Açıklama</th>
+                            <th>İşlemler</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            count++;
+                            <tr>
+                                <th>@count</th>
+                                <td>@item.Name</td>
+                                <td>@item.Description</td>
+                                <td>
+                                    <a href="/Department/UpdateDepartment/@item.DepartmentId" class="btn btn-warning rounded-pill">Güncelle</a>
+                                    <a href="/Department/DeleteDepartment/@item.DepartmentId" class="btn btn-danger rounded-pill">Sil</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<a href="/Department/CreateDepartment" class="btn btn-primary">Yeni Departman Ekle</a>
+

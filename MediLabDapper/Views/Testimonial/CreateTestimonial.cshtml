@@ -1,0 +1,46 @@
+﻿@using MediLabDapper.Dtos.TestimonialDtos
+@model CreateTestimonialDto
+@{
+    ViewData["Title"] = "CreateTestimonial";
+    Layout = "~/Views/AdminLayout/Index.cshtml";
+}
+
+<div class="card">
+    <div class="card-header">
+        <h4 class="card-title">Yeni Referans Ekle</h4>
+    </div>
+    <div class="card-content">
+        <div class="card-body">
+            <form class="form form-vertical" method="post" enctype="multipart/form-data">
+                <div class="form-body">
+                    <div class="form-group">
+                        <label>Ad Soyad</label>
+                        <input type="text" asp-for="NameSurname" id="first-name-vertical" class="form-control" placeholder="Ad Soyad">
+                    </div>
+                    <div class="form-group">
+                        <label>Profil Fotoğrafı (opsiyonel)</label>
+                        <input type="file" name="file" class="form-control" accept=".jpg,.jpeg,.png" />
+                        <div class="form-text">Maksimum 5 MB • .jpg, .jpeg, .png</div>
+                    </div>
+                    <div class="form-group">
+                        <label>Yorum</label>
+                        <input type="text" class="form-control" asp-for="Comment" placeholder="Yorum giriniz...">
+                    </div>
+                    <div class="form-group">
+                        <label>Unvan</label>
+                        <input type="text" class="form-control" asp-for="Title" placeholder="Unvan giriniz...">
+                    </div>
+                    <div class="form-group">
+                        <label>Puan</label>
+                        <input type="number" min="0" max="5" class="form-control" asp-for="RatingStar" placeholder="Puan Seçiniz(0-5)">
+                    </div>
+                    <div class="d-flex justify-content-end">
+                        <button type="submit" class="btn btn-primary me-1 mb-1">Ekle</button>
+                        <button type="reset" class="btn btn-light-secondary me-1 mb-1">Sıfırla</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+

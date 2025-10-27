@@ -1,0 +1,49 @@
+﻿@model IEnumerable<ResultFeatureDto>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/AdminLayout/Index.cshtml";
+}
+@{
+    int count = 0;
+}
+<div class="card">
+    <div class="card-header">
+        <h4 class="card-title">Özellikler</h4>
+    </div>
+    <div class="card-content">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-lg">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Başlık</th>
+                            <th>Açıklama</th>
+                            <th>Icon</th>
+                            <th>İşlemler</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            count++;
+                            <tr>
+                                <th>@count</th>
+                                <td>@item.Title</td>
+                                <td>@item.Description</td>
+                                <td>@item.Icon</td>
+                                <td>
+                                    <a href="/Feature/UpdateFeature/@item.FeatureId" class="btn btn-warning rounded-pill">Güncelle</a>
+                                    <a href="/Feature/DeleteFeature/@item.FeatureId" class="btn btn-danger rounded-pill">Sil</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<a href="/Feature/CreateFeature" class="btn btn-primary">Yeni Özellik Ekle</a>
+
+

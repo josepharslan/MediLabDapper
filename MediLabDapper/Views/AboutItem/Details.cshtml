@@ -1,0 +1,51 @@
+﻿@using MediLabDapper.Dtos.AboutItemDtos
+@model IEnumerable<GetAboutItemByIdDto>
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/AdminLayout/Index.cshtml";
+}
+@{
+    int count = 0;
+    string aboutId = Model.Select(x => x.AboutId.ToString()).FirstOrDefault();
+}
+<div class="card">
+    <div class="card-header">
+        <h4 class="card-title">Hakkımızda Maddeler</h4>
+    </div>
+    <div class="card-content">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-lg">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Başlık</th>
+                            <th>Açıklama</th>
+                            <th>İkon</th>
+                            <th>İşlemler</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            count++;
+                            <tr>
+                                <td>@count</td>
+                                <td>@item.Title</td>
+                                <td>@item.Description</td>
+                                <td>@item.Icon</td>
+                                <td>
+                                    <a href="/AboutItem/UpdateAboutItem/@item.AboutItemId" class="btn btn-secondary rounded-pill">Güncelle</a>
+                                    <a href="/AboutItem/DeleteAboutItem/@item.AboutItemId" class="btn btn-warning rounded-pill">Sil</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<a href="/AboutItem/CreateAboutItem/@aboutId" class="btn btn-success">Madde Ekle</a>
+
+

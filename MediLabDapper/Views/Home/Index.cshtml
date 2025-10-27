@@ -1,0 +1,48 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+@await Component.InvokeAsync("_HomeHead")
+
+<body class="index-page">
+
+    @await Component.InvokeAsync("_HomeNavbar")
+    <main class="main">
+
+        <!-- Hero Section -->
+        @await Component.InvokeAsync("_HomeFeature")
+        <!-- About Section -->
+        @await Component.InvokeAsync("_HomeAbout")
+        <!-- Stats Section -->
+        @await Component.InvokeAsync("_HomeStats")
+        <!-- Services Section -->
+        @await Component.InvokeAsync("_HomeService")
+        <!-- Appointment Section -->
+        @await Component.InvokeAsync("_HomeAppointment")
+        <!-- Departments Section -->
+        @await Component.InvokeAsync("_HomeDepartment")
+        <!-- Doctors Section -->
+        @await Component.InvokeAsync("_HomeDoctor")
+        <!-- Testimonials Section -->
+        @await Component.InvokeAsync("_HomeTestimonial")
+        <!-- Gallery Section -->
+        @await Component.InvokeAsync("_HomeGallery")
+        <!-- Contact Section -->
+        @await Component.InvokeAsync("_HomeContact")
+    </main>
+
+    @await Component.InvokeAsync("_HomeFooter")
+    <!-- Scroll Top -->
+    <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+    <!-- Preloader -->
+    <div id="preloader"></div>
+
+    @await Component.InvokeAsync("_HomeScript")
+
+</body>
+
+</html>

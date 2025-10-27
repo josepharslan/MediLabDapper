@@ -1,0 +1,44 @@
+﻿@model IEnumerable<ResultDepartmentDto>
+<section id="departments" class="departments section">
+    <div class="container section-title" data-aos="fade-up">
+        <h2>Departmanlar</h2>
+        <p>Hastanemizin hizmet verdiği departmanların detayları görüntüleyebilirsiniz.</p>
+    </div>
+
+    <div class="container" data-aos="fade-up" data-aos-delay="100">
+
+        <div class="row">
+            <div class="col-lg-3">
+                <ul class="nav nav-tabs flex-column">
+                    @foreach (var d in Model)
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link @(Model.First().DepartmentId==d.DepartmentId ? "active show" : "")"
+                               data-bs-toggle="tab" href="#dept-@d.DepartmentId">@d.Name</a>
+                        </li>
+                    }
+                </ul>
+            </div>
+
+            <div class="col-lg-9 mt-4 mt-lg-0">
+                <div class="tab-content">
+                    @foreach (var d in Model)
+                    {
+                        <div class="tab-pane @(Model.First().DepartmentId==d.DepartmentId ? "active show" : "")" id="dept-@d.DepartmentId">
+                            <div class="row">
+                                <div class="col-lg-8 details order-2 order-lg-1">
+                                    <h3>@d.Name</h3>
+                                    <p class="fst-italic">@d.Description</p>
+                                </div>
+                                <div class="col-lg-4 text-center order-1 order-lg-2">
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+

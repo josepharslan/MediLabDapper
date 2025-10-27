@@ -1,0 +1,79 @@
+﻿@model IEnumerable<ResultTestimonialDto>
+
+<section id="testimonials" class="testimonials section">
+    <div class="container">
+        <div class="row align-items-center">
+
+            <div class="col-lg-5 info" data-aos="fade-up" data-aos-delay="100">
+                <h3>Görüşler</h3>
+                <p>Hizmetlerimizle ilgili deneyimlerini paylaşan danışanlarımızdan bazı yorumlar.</p>
+            </div>
+
+            <div class="col-lg-7" data-aos="fade-up" data-aos-delay="200">
+                <div class="swiper init-swiper">
+                    <script type="application/json" class="swiper-config">
+                        {
+                          "loop": true,
+                          "speed": 600,
+                          "autoplay": { "delay": 5000 },
+                          "slidesPerView": "auto",
+                          "pagination": { "el": ".swiper-pagination", "type": "bullets", "clickable": true }
+                        }
+                    </script>
+
+                    @if (Model == null || !Model.Any())
+                    {
+                        <div class="p-4 border rounded bg-light">Henüz bir yorum bulunmuyor.</div>
+                    }
+                    else
+                    {
+                        <div class="swiper-wrapper">
+                            @foreach (var t in Model)
+                            {
+                                <div class="swiper-slide">
+                                    <div class="testimonial-item">
+                                        <div class="d-flex">
+                                            <img src=@t.ImageUrl
+                                                 class="testimonial-img flex-shrink-0"
+                                                 alt="@(t.NameSurname ?? "Kullanıcı")">
+
+                                            <div>
+                                                <h3>@(t.NameSurname ?? "Kullanıcı")</h3>
+                                                <h4>@(t.Title ?? "Danışan")</h4>
+
+                                                <div class="stars">
+                                                    @{
+                                                        var rating = Math.Clamp(t.RatingStar, 0, 5);
+                                                        for (int i = 1; i <= 5; i++)
+                                                        {
+                                                            if (i <= rating)
+                                                            {
+                                                                <i class="bi bi-star-fill"></i>
+                                                            }
+                                                            else
+                                                            {
+                                                                <i class="bi bi-star"></i>
+                                                            }
+                                                        }
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <p>
+                                            <i class="bi bi-quote quote-icon-left"></i>
+                                            <span>@(string.IsNullOrWhiteSpace(t.Comment) ? "Deneyimimi genel olarak çok olumlu buldum." : t.Comment)</span>
+                                            <i class="bi bi-quote quote-icon-right"></i>
+                                        </p>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                        <div class="swiper-pagination"></div>
+                    }
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>

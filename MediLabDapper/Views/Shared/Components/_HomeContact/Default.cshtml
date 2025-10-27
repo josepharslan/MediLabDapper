@@ -1,0 +1,65 @@
+﻿@model ContactPageVm
+
+<section id="contact" class="contact section">
+    <div class="container section-title" data-aos="fade-up">
+        <h2>İletişim</h2>
+        <p>Randevu, öneri veya sorularınız için bize yazın.</p>
+    </div>
+
+    <div class="container" data-aos="fade-up" data-aos-delay="100">
+        <div class="row gy-4">
+
+            <div class="col-lg-4">
+                <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="300">
+                    <i class="bi bi-geo-alt flex-shrink-0"></i>
+                    <div>
+                        <h3>Adres</h3>
+                        <p>@Model.Contact.Location</p>
+                    </div>
+                </div>
+                <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="400">
+                    <i class="bi bi-telephone flex-shrink-0"></i>
+                    <div>
+                        <h3>Telefon</h3>
+                        <p>@Model.Contact.PhoneNumber</p>
+                    </div>
+                </div>
+                <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="500">
+                    <i class="bi bi-envelope flex-shrink-0"></i>
+                    <div>
+                        <h3>E-posta</h3>
+                        <p>@Model.Contact.Email</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-8">
+                <form asp-controller="Message" asp-action="SendMessage" method="post" novalidate>
+                    <div class="row gy-4">
+                        @Html.AntiForgeryToken()
+                        <div asp-validation-summary="ModelOnly" class="text-danger mb-2"></div>
+
+
+                        <div class="col-md-6">
+                            <input name="Name" class="form-control" placeholder="Adınız Soyadınız" />
+                            <span asp-validation-for="Form.Name" class="text-danger"></span>
+                        </div>
+
+                        <div class="col-md-6 ">
+                            <input name="Subject" class="form-control" placeholder="Konu" />
+                            <span asp-validation-for="Form.Subject" class="text-danger"></span>
+                        </div>
+
+                        <div class="col-md-12">
+                            <textarea name="MessageContent" rows="6" class="form-control" placeholder="Mesajınız"></textarea>
+                            <span asp-validation-for="Form.MessageContent" class="text-danger"></span>
+                        </div>
+
+                        <div class="col-md-12 text-center">
+                            <button type="submit" class="btn btn-outline-secondary">Mesaj Gönder</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>

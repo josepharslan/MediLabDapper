@@ -1,0 +1,139 @@
+﻿@model CreateAppointmentDto
+
+<div class="appointment-vc" data-vc="appointment">
+    <section id="appointment" class="appointment section">
+        <div class="container section-title" data-aos="fade-up">
+            <h2>Randevu Al</h2>
+            <p>Uygun departman ve doktoru seçerek hızlıca randevu oluşturun.</p>
+        </div>
+
+        <div class="container" data-aos="fade-up" data-aos-delay="100">
+            <form asp-controller="Appointment" asp-action="CreateAppointment" method="post">
+                @Html.AntiForgeryToken()
+
+                <div class="row">
+                    <div class="col-md-4 form-group">
+                        <input asp-for="Name" class="form-control" placeholder="Adınız" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-4 form-group mt-3 mt-md-0">
+                        <input asp-for="Email" class="form-control" placeholder="Mail Adresiniz" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-4 form-group mt-3 mt-md-0">
+                        <input asp-for="PhoneNumber" class="form-control" placeholder="Telefon Numaranız" />
+                        <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4 form-group mt-3">
+                        <input asp-for="Date" type="datetime-local" class="form-control" />
+                        <span asp-validation-for="Date" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-4 form-group mt-3">
+                        <select asp-for="DepartmentId" asp-items="@ViewBag.departments"
+                                class="form-select department-select" required
+                                data-url="@Url.Action("Doctors","Appointment")">
+                            <option value="" selected disabled>Departman Seçiniz</option>
+                        </select>
+                        <span asp-validation-for="DepartmentId" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-4 form-group mt-3">
+                        <select asp-for="DoctorId" class="form-select doctor-select" required disabled>
+                            <option value="" selected disabled>Önce departman seçiniz</option>
+                        </select>
+                        <span asp-validation-for="DoctorId" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="form-group mt-3">
+                    <textarea asp-for="Message" class="form-control" rows="5" placeholder="Mesajınız (Opsiyonel)"></textarea>
+                </div>
+
+                <div class="mt-3">
+                    <button type="submit" class="btn btn-primary">Randevu Oluştur</button>
+                </div>
+
+                @if (TempData["Success"] is string ok)
+                {
+                    <div class="alert alert-success mt-2">@ok</div>
+                }
+                @if (TempData["Error"] is string err)
+                {
+                    <div class="alert alert-danger mt-2">@err</div>
+                }
+            </form>
+        </div>
+    </section>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+    <script>
+        (function () {
+          if (!window.jQuery) { console.error('jQuery yüklü değil'); return; }
+
+          var $root = $('div.appointment-vc[data-vc="appointment"]').last(); // bu VC örneği
+          var $form = $root.find('form.appointment-form');
+          var $dep  = $root.find('select[name="DepartmentId"]');
+          var $doc  = $root.find('select[name="DoctorId"]');
+
+          var endpoint = $dep.data('url') || '@Url.Action("Doctors", "Appointment")';
+          var selectedDoctorId = @((Model?.DoctorId ?? 0));
+
+          function setLoading(){
+            $doc.prop('disabled', true)
+                .empty()
+                .append($('<option/>',{text:'Yükleniyor…',disabled:true,selected:true}));
+          }
+          function setPlaceholder(t){
+            $doc.prop('disabled', true)
+                .empty()
+                .append($('<option/>',{text:(t||'Önce departman seçiniz'),disabled:true,selected:true}));
+          }
+
+          // Delegated event: id çakışsa bile hep doğru select’i yakalar
+          $root.on('change', 'select[name="DepartmentId"]', function () {
+            var depId = $(this).val();
+            console.log('[Appointment VC] Department changed:', depId, '→', endpoint);
+            if (!depId) { setPlaceholder(); return; }
+
+            setLoading();
+
+            $.ajax({
+              url: endpoint,
+              method: 'GET',
+              dataType: 'json',
+              data: { departmentId: depId }
+            }).done(function (list) {
+              console.log('[Appointment VC] Doctors response:', list);
+              $doc.empty();
+
+              if (!list || !list.length) {
+                setPlaceholder('Uygun doktor bulunamadı');
+                return;
+              }
+
+              $doc.append($('<option/>',{text:'Doktor Seçiniz',disabled:true,selected:true}));
+
+              $.each(list, function (_, d) {
+                $doc.append($('<option/>',{ value: d.id, text: d.name }));
+              });
+
+              $doc.prop('disabled', false);
+
+              if (selectedDoctorId && list.some(function(x){ return x.id === selectedDoctorId; })) {
+                $doc.val(String(selectedDoctorId));
+              }
+            }).fail(function (xhr) {
+              console.error('[Appointment VC] Doctors error:', xhr.status, xhr.responseText?.slice(0,200));
+              setPlaceholder('Yükleme hatası');
+            });
+          });
+
+          // İlk yükleme: seçili departman varsa otomatik tetikle
+          if ($dep.val()) { $dep.trigger('change'); } else { setPlaceholder(); }
+        })();
+    </script>
+</div>

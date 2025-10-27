@@ -1,0 +1,54 @@
+﻿@model IEnumerable<ResultServiceDto>
+
+<section id="services" class="services section">
+    <div class="container section-title" data-aos="fade-up">
+        <h2>Hizmetlerimiz</h2>
+        <p>Uzman kadromuz ve modern altyapımızla tanı, tedavi ve bakım süreçlerinde kapsamlı çözümler sunuyoruz.</p>
+    </div>
+
+    <div class="container">
+        <div class="row gy-4">
+            @if (Model != null && Model.Any())
+            {
+                var delay = 100;
+                foreach (var s in Model)
+                {
+                    <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="@delay">
+                        <div class="service-item position-relative">
+                            <div class="icon">
+                                <i class="@(string.IsNullOrWhiteSpace(s.Icon) ? "fas fa-notes-medical" : s.Icon)"></i>
+                            </div>
+                            <h3>@s.Title</h3>
+                            <p>@s.Description</p>
+                        </div>
+                    </div>
+                    delay += 100; 
+                }
+            }
+            else
+            {
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+                    <div class="service-item position-relative">
+                        <div class="icon"><i class="fas fa-heartbeat"></i></div>
+                        <h3>Kardiyoloji</h3>
+                        <p>Koruyucu kardiyoloji, ritim takibi ve kişiye özel tedavi planları.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
+                    <div class="service-item position-relative">
+                        <div class="icon"><i class="fas fa-pills"></i></div>
+                        <h3>İlaç Yönetimi</h3>
+                        <p>İlaç etkileşim analizi ve güvenli reçete takibi.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
+                    <div class="service-item position-relative">
+                        <div class="icon"><i class="fas fa-notes-medical"></i></div>
+                        <h3>Dijital Kayıt</h3>
+                        <p>Tetkik ve raporlarınıza güvenli ve hızlı erişim.</p>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>

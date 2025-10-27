@@ -1,0 +1,45 @@
+﻿@using MediLabDapper.Dtos.AboutDtos
+@model IEnumerable<ResultAboutDto>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/AdminLayout/Index.cshtml";
+}
+
+@{
+    int count = 0;
+}
+
+<div class="card">
+    <div class="card-header">
+        <h4 class="card-title">Hakkımızda</h4>
+    </div>
+    <div class="card-content">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-lg">
+                    <thead>
+                        <tr>
+                            <th>Açıklama</th>
+                            <th>İşlemler</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            count++;
+                            <tr>
+                                <td>@item.AboutDescription</td>
+                                <td>
+                                    <a href="/AboutItem/Details/@item.AboutId" class="btn btn-secondary rounded-pill">Detaylar</a>
+                                    <a href="/About/UpdateAbout/@item.AboutId" class="btn btn-warning rounded-pill">Güncelle</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
