@@ -7,7 +7,7 @@ MediLabDapper, laboratuvar/test süreçlerini yalın SQL altyapısı ile yönete
 - Temiz katman ayrımı ve bağımlılıkları sadeleştiren mimari yaklaşım
 - Kolay devreye alma ve hızlı local geliştirme deneyimi
 - Razor View/Pages ile uçtan uca UI akışı
-- 
+
 ## Kullanılan Teknolojiler
 
 - .NET (net8.0)
